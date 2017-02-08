@@ -1,0 +1,8 @@
+prefix=/home/diya/sdvt2017/devel
+
+Name: sdvt_viz
+Description: Description of sdvt_viz
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/diya/sdvt2017/devel/lib 
+Requires: 

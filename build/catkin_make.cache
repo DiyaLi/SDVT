@@ -1,0 +1,2 @@
+sdvt_description:sdvt_gazebo:sdvt_viz
+-DCATKIN_DEVEL_PREFIX=/home/diya/sdvt2017/devel -DCMAKE_INSTALL_PREFIX=/home/diya/sdvt2017/install -G Unix Makefiles

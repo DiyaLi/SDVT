@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="robot_initial_pose" default="$(optenv ROBOT_INITIAL_POSE)"/>
+  <arg name="husky_gazebo_description" default="$(optenv HUSKY_GAZEBO_DESCRIPTION)"/>
+
+  <param name="robot_description"        
+         command="$(find xacro)/xacro $(find sdvt_description)/urdf/description.xacro" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Load Husky control information -->
+  <include file="$(find husky_control)/launch/control.launch"/>
+
+  <!-- Spawn robot in gazebo -->
+  <node name="spawn_cart_model" pkg="gazebo_ros" type="spawn_model"
+    args="-unpause -urdf -param robot_description -model description"/>
+
+
+</launch>

@@ -1,0 +1,8 @@
+prefix=/home/diya/sdvt2017/devel
+
+Name: sdvt_gazebo
+Description: Description of sdvt_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/diya/sdvt2017/devel/lib 
+Requires: 
