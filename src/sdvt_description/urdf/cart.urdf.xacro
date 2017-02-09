@@ -2,9 +2,6 @@
 
 <robot name="sdvt_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Included URDF/XACRO Files -->
-  <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
-
   <property name="M_PI" value="3.14159"/>
 
   <!-- Base Size -->
@@ -13,15 +10,13 @@
   <property name="base_z_size" value="1.144" />
 
   <!-- Wheel Mounting Positions -->
-  <xacro:property name="wheelbase" value="1.6" />
-  <xacro:property name="track" value="1.21" />
-  <xacro:property name="wheel_vertical_offset" value="1.3282" />
+  <xacro:property name="wheelbase" value="1.9" />
+  <xacro:property name="track" value="1.2" />
+  <xacro:property name="wheel_vertical_offset" value="0.03282" />
 
   <!-- Wheel Properties -->
   <xacro:property name="wheel_length" value="0.23" />
   <xacro:property name="wheel_radius" value="0.25" />
-
-  <xacro:macro name="sdvt_robot">
 
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="base_link">
@@ -29,7 +24,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <!--<mesh filename="package://sdvt_description/meshes/base_link.dae" />-->
-          <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
+          <box size="${base_x_size/4} ${base_y_size/4} ${base_z_size/4}"/>
         </geometry>
       </visual>
       <collision>
@@ -81,6 +76,56 @@
     <gazebo reference="imu_link">
     </gazebo>
 
+    <!-- SDVT wheel xacro -->
+	<xacro:macro name="sdvt_wheel" params="wheel_prefix *joint_pose">
+		<link name="${wheel_prefix}_wheel_link">
+			<inertial>
+				<mass value="2.637" />
+				<origin xyz="0 0 0" />
+				<inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411" />
+			</inertial>
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<!--<mesh filename="package://husky_description/meshes/wheel.dae" />-->
+ 					<cylinder length="${wheel_length/4}" radius="${wheel_radius/4}" />
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+				<geometry>
+					<cylinder length="${wheel_length}" radius="${wheel_radius}" />
+				</geometry>
+			</collision>
+		</link>
+
+		<gazebo reference="${wheel_prefix}_wheel_link">
+			<mu1 value="1.0"/>
+			<mu2 value="1.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+		</gazebo>
+
+		<joint name="${wheel_prefix}_wheel" type="continuous">
+			<parent link="base_link"/>
+			<child link="${wheel_prefix}_wheel_link"/>
+			<xacro:insert_block name="joint_pose"/>
+			<axis xyz="0 1 0" rpy="0 0 0" />
+		</joint>
+
+		<transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${wheel_prefix}_wheel_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${wheel_prefix}_wheel">
+				<hardwareInterface>VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+	</xacro:macro>
+
     <!-- SDVT wheel macros -->
     <xacro:sdvt_wheel wheel_prefix="front_left">
       <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
@@ -95,10 +140,34 @@
       <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:sdvt_wheel>
 
- <!--   <xacro:sdvt_decorate /> -->
+  <!-- Decoration description  <xacro:sdvt_decorate /> -->
 
+  <!-- Same note as applies to imu_link -->
+  <link name="navsat_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.026" length="0.016" />
+      </geometry>
+      <origin xyz="0 0 0.008" />
+      <material name="black" />
+    </visual>
+  </link>
+  <joint name="navsat_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="navsat_link" />
+    <origin xyz="-0.180 0.126 0.1815" />
+  </joint>
 
+  <!-- Left lidar -->
 
-  </xacro:macro>
+  <!-- Right lidar -->
+
+  <!-- Front radar -->
+ 
+  <!-- Left camera -->
+
+  <!-- Right camera -->
+
+  <xacro:include filename="sdvt.gazebo" />
 
 </robot>
