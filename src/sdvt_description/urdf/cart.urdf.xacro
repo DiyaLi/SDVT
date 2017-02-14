@@ -5,38 +5,31 @@
   <property name="M_PI" value="3.14159"/>
 
   <!-- Base Size -->
-  <property name="base_x_size" value="1.978" />
-  <property name="base_y_size" value="1.19" />
-  <property name="base_z_size" value="1.144" />
+  <property name="base_x_size" value="3" />
+  <property name="base_y_size" value="2" />
+  <property name="base_z_size" value="1" />
 
   <!-- Wheel Mounting Positions -->
-  <xacro:property name="wheelbase" value="1.9" />
-  <xacro:property name="track" value="1.2" />
-  <xacro:property name="wheel_vertical_offset" value="0.03282" />
+  <xacro:property name="wheelbase" value="4.8" />
+  <xacro:property name="track" value="2.63" />
+  <xacro:property name="wheel_vertical_offset" value="-0.5" />
 
   <!-- Wheel Properties -->
-  <xacro:property name="wheel_length" value="0.23" />
-  <xacro:property name="wheel_radius" value="0.25" />
+  <xacro:property name="wheel_length" value="1" />
+  <xacro:property name="wheel_radius" value="0.24" />
 
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="base_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 1.65 0" rpy="${M_PI/2} 0 0" />
         <geometry>
-          <!--<mesh filename="package://sdvt_description/meshes/base_link.dae" />-->
-          <box size="${base_x_size/4} ${base_y_size/4} ${base_z_size/4}"/>
+          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels.stl" scale="0.03 0.03 0.03"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 ${base_z_size/4}" rpy="0 0 0" />
         <geometry>
-          <box size="${base_x_size} ${base_y_size} ${base_z_size/2}"/>
-        </geometry>
-      </collision>
-      <collision>
-        <origin xyz="0 0 ${base_z_size*3/4}" rpy="0 0 0" />
-        <geometry>
-          <box size="${base_x_size*4/5} ${base_y_size} ${base_z_size/2}"/>
+          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels.stl" scale="0.03 0.03 0.03"/>
         </geometry>
       </collision>
     </link>
@@ -85,16 +78,17 @@
 				<inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411" />
 			</inertial>
 			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
+				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
 				<geometry>
-					<!--<mesh filename="package://husky_description/meshes/wheel.dae" />-->
- 					<cylinder length="${wheel_length/4}" radius="${wheel_radius/4}" />
+					<!-- <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.03 0.03 0.03"/> -->
+ 					 <cylinder length="${wheel_length}" radius="${wheel_radius}" />
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
 				<geometry>
-					<cylinder length="${wheel_length}" radius="${wheel_radius}" />
+					<!-- <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.03 0.03 0.03"/> -->
+ 					 <cylinder length="${wheel_length}" radius="${wheel_radius}" />
 				</geometry>
 			</collision>
 		</link>
@@ -158,15 +152,123 @@
     <origin xyz="-0.180 0.126 0.1815" />
   </joint>
 
+  <!-- Front radar -->
+<link name="Radar">
+    <visual>
+      <geometry>
+        <box size=".1 .23 .14"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size=".1 .23 .14"/>
+      </geometry>
+    </collision>
+</link>
+ <joint name="base_to_radar" type="fixed">
+      <child link ="Radar" />
+      <parent link ="base_link" />
+      <origin xyz="3.2 0 0.4"/>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+
   <!-- Left lidar -->
+  <link name="lidar_left">
+     <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+        <cylinder length="0.09" radius="0.05"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+    <joint name="hokuyo_joint_left" type="fixed">
+      <child link ="lidar_left" />
+      <parent link ="base_link" />
+      <origin xyz="-0.14 -1.72 0.42"/>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
 
   <!-- Right lidar -->
+ <link name="lidar_right">
+     <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+        <cylinder length="0.09" radius="0.05"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
 
-  <!-- Front radar -->
- 
+    <joint name="hokuyo_joint_right" type="fixed">
+      <child link ="lidar_right" />
+      <parent link ="base_link" />
+      <origin xyz="-0.14 1.72 0.42"/>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+
   <!-- Left camera -->
+<link name="camera_l">
+    <visual>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.04"/>
+      </geometry>
+    </collision>
+</link>
+ <joint name="base_to_camera_l" type="fixed">
+      <child link ="camera_l" />
+      <parent link ="base_link" />
+      <origin xyz="1.5 -1.8 3"/>
+    </joint>
 
   <!-- Right camera -->
+   <link name="camera_r">
+    <visual>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.04"/>
+      </geometry>
+    </collision>
+</link>
+ <joint name="base_to_camera_r" type="fixed">
+      <child link ="camera_r" />
+      <parent link ="base_link" />
+      <origin xyz="1.5 1.8 3"/>
+    </joint>
 
   <xacro:include filename="sdvt.gazebo" />
 
