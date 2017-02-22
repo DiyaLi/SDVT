@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/leaf/leaf.o := ld -m elf_x86_64   -r -o /home/diya/sdvt2017/src/linuxcan/leaf/leaf.o /home/diya/sdvt2017/src/linuxcan/leaf/leafHWIf.o /home/diya/sdvt2017/src/linuxcan/leaf/ticks.o 

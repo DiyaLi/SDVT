@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.ko /home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.o /home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.mod.o

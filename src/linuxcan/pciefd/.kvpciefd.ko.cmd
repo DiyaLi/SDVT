@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/pciefd/kvpciefd.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/diya/sdvt2017/src/linuxcan/pciefd/kvpciefd.ko /home/diya/sdvt2017/src/linuxcan/pciefd/kvpciefd.o /home/diya/sdvt2017/src/linuxcan/pciefd/kvpciefd.mod.o

@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.o := ld -m elf_x86_64   -r -o /home/diya/sdvt2017/src/linuxcan/mhydra/mhydra.o /home/diya/sdvt2017/src/linuxcan/mhydra/mhydraHWIf.o /home/diya/sdvt2017/src/linuxcan/mhydra/dlc.o /home/diya/sdvt2017/src/linuxcan/mhydra/ticks.o 

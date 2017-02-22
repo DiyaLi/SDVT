@@ -10,26 +10,26 @@
   <property name="base_z_size" value="1" />
 
   <!-- Wheel Mounting Positions -->
-  <xacro:property name="wheelbase" value="4.8" />
-  <xacro:property name="track" value="2.63" />
-  <xacro:property name="wheel_vertical_offset" value="-0.5" />
+  <xacro:property name="wheelbase" value="1.702" />
+  <xacro:property name="track" value="1.016" />
+  <xacro:property name="wheel_vertical_offset" value="-0.05" />
 
   <!-- Wheel Properties -->
-  <xacro:property name="wheel_length" value="1" />
-  <xacro:property name="wheel_radius" value="0.24" />
+  <xacro:property name="wheel_length" value="0.23" />
+  <xacro:property name="wheel_radius" value="0.242" />
 
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="base_link">
       <visual>
-        <origin xyz="0 1.65 0" rpy="${M_PI/2} 0 0" />
+        <origin xyz="0 0.559 0" rpy="${M_PI/2} 0 0" />
         <geometry>
-          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels.stl" scale="0.03 0.03 0.03"/>
+          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels meters.stl" scale="0.0104 0.0104 0.0104"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 ${base_z_size/4}" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels.stl" scale="0.03 0.03 0.03"/>
+          <mesh filename="package://sdvt_description/meshes/New Frame with car no wheels meters.stl" scale="0.0104 0.0104 0.0104"/>
         </geometry>
       </collision>
     </link>
@@ -80,15 +80,15 @@
 			<visual>
 				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
 				<geometry>
-					<!-- <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.03 0.03 0.03"/> -->
- 					 <cylinder length="${wheel_length}" radius="${wheel_radius}" />
+					 <mesh filename="package://sdvt_description/meshes/tire meters.stl" scale="0.104 0.104 0.104"/> 
+ 					 <!--<cylinder length="${wheel_length}" radius="${wheel_radius}" /> -->
 				</geometry>
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
 				<geometry>
-					<!-- <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.03 0.03 0.03"/> -->
- 					 <cylinder length="${wheel_length}" radius="${wheel_radius}" />
+					 <mesh filename="package://sdvt_description/meshes/tire meters.stl" scale="0.0104 0.0104 0.0104"/> 
+ 					<!-- <cylinder length="${wheel_length}" radius="${wheel_radius}" />-->
 				</geometry>
 			</collision>
 		</link>
@@ -170,7 +170,7 @@
  <joint name="base_to_radar" type="fixed">
       <child link ="Radar" />
       <parent link ="base_link" />
-      <origin xyz="3.2 0 0.4"/>
+      <origin xyz="1.18 0 0.2"/>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
@@ -181,7 +181,15 @@
     </joint>
 
   <!-- Left lidar -->
-  <link name="lidar_left">
+
+  <link name="lidar_left_link">
+<!--<inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001"  ixy="0.0"  ixz="0.0"
+               iyy="0.001"  iyz="0.0"
+               izz="0.001" />
+    </inertial> -->
      <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
@@ -192,9 +200,9 @@
   </link>
 
     <joint name="hokuyo_joint_left" type="fixed">
-      <child link ="lidar_left" />
+      <child link ="lidar_left_link" />
       <parent link ="base_link" />
-      <origin xyz="-0.14 -1.72 0.42"/>
+      <origin xyz="-0.11 -0.65 0.12"/>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
@@ -218,7 +226,7 @@
     <joint name="hokuyo_joint_right" type="fixed">
       <child link ="lidar_right" />
       <parent link ="base_link" />
-      <origin xyz="-0.14 1.72 0.42"/>
+      <origin xyz="-0.11 0.65 0.12"/>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
@@ -246,7 +254,7 @@
  <joint name="base_to_camera_l" type="fixed">
       <child link ="camera_l" />
       <parent link ="base_link" />
-      <origin xyz="1.5 -1.8 3"/>
+      <origin xyz="0.5 -0.65 1.1"/>
     </joint>
 
   <!-- Right camera -->
@@ -267,7 +275,7 @@
  <joint name="base_to_camera_r" type="fixed">
       <child link ="camera_r" />
       <parent link ="base_link" />
-      <origin xyz="1.5 1.8 3"/>
+      <origin xyz="0.5 0.6 1.1"/>
     </joint>
 
   <xacro:include filename="sdvt.gazebo" />

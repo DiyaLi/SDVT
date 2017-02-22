@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/virtualcan/kvvirtualcan.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/diya/sdvt2017/src/linuxcan/virtualcan/kvvirtualcan.ko /home/diya/sdvt2017/src/linuxcan/virtualcan/kvvirtualcan.o /home/diya/sdvt2017/src/linuxcan/virtualcan/kvvirtualcan.mod.o

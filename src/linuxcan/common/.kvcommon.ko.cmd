@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/common/kvcommon.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/diya/sdvt2017/src/linuxcan/common/kvcommon.ko /home/diya/sdvt2017/src/linuxcan/common/kvcommon.o /home/diya/sdvt2017/src/linuxcan/common/kvcommon.mod.o

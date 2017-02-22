@@ -1,0 +1,2 @@
+/home/diya/sdvt2017/src/linuxcan/common/kvcommon.ko
+/home/diya/sdvt2017/src/linuxcan/common/VCanOsIf.o /home/diya/sdvt2017/src/linuxcan/common/objbuf.o /home/diya/sdvt2017/src/linuxcan/common/osif_functions_kernel.o /home/diya/sdvt2017/src/linuxcan/common/queue.o /home/diya/sdvt2017/src/linuxcan/common/util.o /home/diya/sdvt2017/src/linuxcan/common/softsync.o /home/diya/sdvt2017/src/linuxcan/common/capabilities.o

@@ -1,0 +1,1 @@
+cmd_/home/diya/sdvt2017/src/linuxcan/pcican/kvpcican.o := ld -m elf_x86_64   -r -o /home/diya/sdvt2017/src/linuxcan/pcican/kvpcican.o /home/diya/sdvt2017/src/linuxcan/pcican/PciCanHwIf.o /home/diya/sdvt2017/src/linuxcan/pcican/dallas.o 
