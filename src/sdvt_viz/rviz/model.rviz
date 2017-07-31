@@ -58,11 +58,26 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        Radar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
         base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_l:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_r:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -85,6 +100,16 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        lidar_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         navsat_link:
           Alpha: 1
           Show Axes: false
@@ -121,11 +146,11 @@ Visualization Manager:
       Update Interval: 0
       Value: false
     - Class: rviz/InteractiveMarkers
-      Enable Transparency: true
+      Enable Transparency: false
       Enabled: true
       Name: InteractiveMarkers
       Show Axes: false
-      Show Descriptions: true
+      Show Descriptions: false
       Show Visual Aids: false
       Update Topic: /twist_marker_server/update
       Value: true
@@ -144,7 +169,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.36919
+      Distance: 4.97732
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -156,10 +181,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.255398
+      Pitch: 0.530399
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.42541
+      Yaw: 5.27862
     Saved: ~
 Window Geometry:
   Displays:
@@ -177,5 +202,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1236
-  X: 1577
-  Y: 231
+  X: 110
+  Y: 14

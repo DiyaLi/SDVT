@@ -5,6 +5,10 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
+SUBDIRS(kalman1)
+SUBDIRS(sdvt_control)
 SUBDIRS(sdvt_description)
 SUBDIRS(sdvt_gazebo)
+SUBDIRS(sdvt_navigation)
 SUBDIRS(sdvt_viz)
+SUBDIRS(throttle_control)

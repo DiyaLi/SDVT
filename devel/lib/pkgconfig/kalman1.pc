@@ -1,0 +1,8 @@
+prefix=/home/diya/sdvt2017/devel
+
+Name: kalman1
+Description: Description of kalman1
+Version: 0.0.0
+Cflags: -I/home/diya/sdvt2017/devel/include
+Libs: -L/home/diya/sdvt2017/devel/lib 
+Requires: 

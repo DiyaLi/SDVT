@@ -1,0 +1,8 @@
+prefix=/home/diya/sdvt2017/install
+
+Name: sdvt_navigation
+Description: Description of sdvt_navigation
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/diya/sdvt2017/install/lib 
+Requires: 

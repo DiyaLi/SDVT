@@ -1,0 +1,12 @@
+<launch>
+
+  <!--- Run gmapping -->
+  <include file="$(find sdvt_navigation)/launch/include/gmapping.launch" />
+
+  <!--- Run Move Base -->
+  <include file="$(find sdvt_navigation)/launch/include/move_base.launch" />
+
+   <!--- Run hokuyo -->
+  <include file="$(find sdvt_navigation)/launch/include/hokuyo.launch" />
+
+</launch>

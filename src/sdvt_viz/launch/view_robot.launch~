@@ -1,3 +1,25 @@
 <launch>
+  <param name="use_gui" value="true"/>
+  <include file="$(find sdvt_description)/launch/description.launch">
+  </include>
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sdvt_viz)/rviz/model.rviz" output="screen"/>
+
+  <node name="hokuyo0" pkg="hokuyo_node" type="hokuyo_node">
+        <param name="port" type="string" value="/dev/ttyACM0" />
+        <remap from="scan" to="scan0" />
+  <param name="min_ang" value="-2.09" />
+  <param name="max_ang" value="2.09" />
+  <param name="hokuyo_node/calibrate_time" value="true" />
+  <param name="frame_id" value="lidar_right" />
+  </node>
+  
+  <node name="hokuyo1" pkg="hokuyo_node" type="hokuyo_node">
+        <param name="port" type="string" value="/dev/ttyACM1" />
+        <remap from="scan" to="scan1" />
+  <param name="min_ang" value="-2.09" />
+  <param name="max_ang" value="2.09" />
+  <param name="hokuyo_node/calibrate_time" value="true" />
+  <param name="frame_id" value="lidar_left" />
+  </node>
+
 </launch>
