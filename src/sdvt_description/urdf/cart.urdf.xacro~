@@ -2,6 +2,8 @@
 
 <robot name="sdvt_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <xacro:include filename="$(find sdvt_description)/urdf/wheel.urdf.xacro" />
+
   <property name="M_PI" value="3.14159"/>
 
   <!-- Base Size -->
@@ -25,6 +27,9 @@
         <geometry>
           <mesh filename="package://sdvt_description/meshes/Frame.stl" scale="0.0104 0.0104 0.0104"/>
         </geometry>
+      <material name="grey">
+        <color rgba=".748 .748 .755 1"/>
+      </material>
       </visual>
       <collision>
         <origin xyz="0 0.559 0" rpy="${M_PI/2} 0 0" />
@@ -38,10 +43,26 @@
     <link name="base_footprint"/>
 
     <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
-      <parent link="base_link" />
-      <child link="base_footprint" />
+      <origin xyz="0 0 ${-wheel_vertical_offset + wheel_radius}" rpy="0 0 0" />
+      <parent link="base_footprint" />
+      <child link="base_link" />
     </joint>
+
+<!-- Navsat link -->
+	  <link name="navsat_link">
+		<visual>
+		  <geometry>
+		    <cylinder radius="0.026" length="0.016" />
+		  </geometry>
+		  <origin xyz="0 0 0" />
+		  <material name="black" />
+		</visual>
+	  </link>
+	  <joint name="navsat_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="navsat_link" />
+		<origin xyz="0 0 0" />
+	  </joint>
 
     <!-- Interial link stores the robot's inertial information -->
     <link name="inertial_link">
@@ -67,60 +88,11 @@
       <child link="imu_link" />
     </joint>
     <gazebo reference="imu_link">
-    </gazebo>
+    </gazebo> 
 
-    <!-- SDVT wheel xacro -->
-	<xacro:macro name="sdvt_wheel" params="wheel_prefix *joint_pose">
-		<link name="${wheel_prefix}_wheel_link">
-			<inertial>
-				<mass value="2.637" />
-				<origin xyz="0 0 0" />
-				<inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411" />
-			</inertial>
-			<visual>
-				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
-				<geometry>
-					 <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.0104 0.0104 0.0104"/> 
- 					 <!--<cylinder length="${wheel_length}" radius="${wheel_radius}" /> -->
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 0" rpy="${M_PI/2} ${M_PI/2} 0" />
-				<geometry>
-					 <!-- <mesh filename="package://sdvt_description/meshes/tire.stl" scale="0.0104 0.0104 0.0104"/> -->
- 					 <cylinder length="${wheel_length}" radius="${wheel_radius}" />
-				</geometry>
-			</collision>
-		</link>
 
-		<gazebo reference="${wheel_prefix}_wheel_link">
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
-			<kp value="10000000.0" />
-			<kd value="1.0" />
-			<fdir1 value="1 0 0"/>
-		</gazebo>
 
-		<joint name="${wheel_prefix}_wheel" type="continuous">
-			<parent link="base_link"/>
-			<child link="${wheel_prefix}_wheel_link"/>
-			<xacro:insert_block name="joint_pose"/>
-			<axis xyz="0 1 0" rpy="0 0 0" />
-		</joint>
-
-		<transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
-			<type>transmission_interface/SimpleTransmission</type>
-			<actuator name="${wheel_prefix}_wheel_motor">
-				<mechanicalReduction>1</mechanicalReduction>
-			</actuator>
-			<joint name="${wheel_prefix}_wheel">
-				<hardwareInterface>VelocityJointInterface</hardwareInterface>
-			</joint>
-		</transmission>
-
-	</xacro:macro>
-
-    <!-- SDVT wheel macros -->
+    <!-- SDVT wheel macros 
     <xacro:sdvt_wheel wheel_prefix="front_left">
       <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:sdvt_wheel>
@@ -132,31 +104,43 @@
     </xacro:sdvt_wheel>
     <xacro:sdvt_wheel wheel_prefix="rear_right">
       <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-    </xacro:sdvt_wheel>
+    </xacro:sdvt_wheel>-->
 
-  <!-- Decoration description  <xacro:sdvt_decorate /> -->
+    <!-- SDVT wheel ARKMEN macros -->
+    <xacro:front_wheel lr_prefix="left" fr_prefix="front" lr_reflect="1" fr_reflect="1">
+      <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:front_wheel>
+    <xacro:front_wheel lr_prefix="right" fr_prefix="front" lr_reflect="-1" fr_reflect="1">
+      <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:front_wheel>
+    <xacro:rear_wheel lr_prefix="left" fr_prefix="rear" lr_reflect="1" fr_reflect="-1">
+      <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:rear_wheel>
+    <xacro:rear_wheel lr_prefix="right" fr_prefix="rear" lr_reflect="-1" fr_reflect="-1">
+      <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:rear_wheel>
 
   <!-- Same note as applies to imu_link -->
-  <link name="navsat_link">
+  <link name="GPS_link">
     <visual>
       <geometry>
-        <cylinder radius="0.026" length="0.016" />
+        <box size="0.1 0.1 0.05" />
       </geometry>
       <origin xyz="0 0 0.008" />
       <material name="black" />
     </visual>
   </link>
-  <joint name="navsat_joint" type="fixed">
+  <joint name="gps_joint" type="fixed">
     <parent link="base_link" />
-    <child link="navsat_link" />
-    <origin xyz="-0.180 0.126 0.1815" />
+    <child link="GPS_link" />
+    <origin xyz="0 0 0.54" />
   </joint>
 
-<!-- Front radar -->
-<link name="Radar">
+  <!-- Front radar -->
+<link name="Lidar">
     <visual>
       <geometry>
-        <box size=".1 .23 .14"/>
+        <box size=".1 .18 .11"/>
       </geometry>
       <material name="white"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -173,7 +157,7 @@
     </inertial>
  </link>
  <joint name="base_to_radar" type="fixed">
-      <child link ="Radar" />
+      <child link ="Lidar" />
       <parent link ="base_link" />
       <origin xyz="1.18 0 0.2"/>
       <axis>
@@ -186,12 +170,7 @@
     </joint>
 
   <!-- Left lidar -->
-  <xacro:include filename="$(find sdvt_description)/urdf/sensors/hokuyo_laser.urdf.xacro"/>
-	<xacro:hokuyo_laser name="left_laser" parent="lidar_left" ros_topic="/scan" update_rate="20" min_angle="-1.57" max_angle="1.57">
-		<origin xyz="0 0 0" rpy="0 0 0" />
-	</xacro:hokuyo_laser>
-
-  <link name="lidar_left_link">
+  <link name="lidar_left">
 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -216,8 +195,8 @@
 
   </link>
 
-    <joint name="hokuyo_left_joint" type="fixed">
-      <child link ="lidar_left_link" />
+    <joint name="hokuyo_joint_left" type="fixed">
+      <child link ="lidar_left" />
       <parent link ="base_link" />
       <origin xyz="-0.11 -0.65 0.12" rpy="0 0 -1.57"/>
       <axis>
@@ -230,11 +209,7 @@
     </joint>
 
   <!-- Right lidar -->
-	<xacro:hokuyo_laser name="right_laser" parent="lidar_right" ros_topic="/scan" update_rate="20" min_angle="-1.57" max_angle="1.57">
-		<origin xyz="0 0 0" rpy="0 0 0" />
-	</xacro:hokuyo_laser>
-
- <link name="lidar_right_link">
+ <link name="lidar_right">
 
      <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -259,8 +234,8 @@
 
   </link>
 
-    <joint name="hokuyo_right_joint" type="fixed">
-      <child link ="lidar_right_link" />
+    <joint name="hokuyo_joint_right" type="fixed">
+      <child link ="lidar_right" />
       <parent link ="base_link" />
       <origin xyz="-0.11 0.6 0.12" rpy="0 0 1.57"/>
       <axis>
@@ -290,7 +265,7 @@
  <joint name="base_to_camera_l" type="fixed">
       <child link ="camera_l" />
       <parent link ="base_link" />
-      <origin xyz="0.5 -0.65 1.1"/>
+      <origin xyz="0.5 -0.65 1.6" rpy="3.141 0 0"/>
     </joint>
 
   <!-- Right camera -->
@@ -311,8 +286,75 @@
   <joint name="base_to_camera_r" type="fixed">
       <child link ="camera_r" />
       <parent link ="base_link" />
-      <origin xyz="0.5 0.6 1.1"/>
+      <origin xyz="0.5 0.6 1.6" rpy="3.141 0 0"/>
     </joint>
+
+<!-- Added side and back camera -->
+   
+    <link name="camera_side_right">
+    <visual>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_camera_side_right" type="fixed">
+      <child link ="camera_side_right" />
+      <parent link ="base_link" />
+      <origin xyz="-0.62 0.6 1.6" rpy="0 0 1.5708"/>
+    </joint>
+
+
+  <link name="camera_side_left">
+    <visual>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_camera_side_left" type="fixed">
+      <child link ="camera_side_left" />
+      <parent link ="base_link" />
+      <origin xyz="-0.62 -0.65 1.6" rpy="0 0 -1.5708"/>
+    </joint>
+
+
+  <link name="camera_back">
+    <visual>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+      <material name="white"/>
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.076" radius="0.04"/>
+      </geometry>
+    </collision>
+   </link>
+   <joint name="base_to_camera_back" type="fixed">
+      <child link ="camera_back" />
+      <parent link ="base_link" />
+      <origin xyz="-0.7 0 1.6" rpy="0 0 3.1416"/>
+    </joint>
+
+  
+
 
   <xacro:include filename="sdvt.gazebo" />
 

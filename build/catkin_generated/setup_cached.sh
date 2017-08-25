@@ -7,6 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH="/opt/ros/indigo/lib/x86_64-linux-gnu:/home/diya/sdvt2017/devel/lib:/opt/ros/indigo/lib"
-export PKG_CONFIG_PATH="/opt/ros/indigo/lib/x86_64-linux-gnu/pkgconfig:/home/diya/sdvt2017/devel/lib/pkgconfig:/opt/ros/indigo/lib/pkgconfig"
 export PWD="/home/diya/sdvt2017/build"

@@ -117,6 +117,7 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/diya/sdvt2017/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/diya/sdvt2017/build/steer_drive_ros/steer_drive_ros/cmake_install.cmake")
   INCLUDE("/home/diya/sdvt2017/build/kalman1/cmake_install.cmake")
   INCLUDE("/home/diya/sdvt2017/build/sdvt_control/cmake_install.cmake")
   INCLUDE("/home/diya/sdvt2017/build/sdvt_description/cmake_install.cmake")
@@ -124,6 +125,9 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   INCLUDE("/home/diya/sdvt2017/build/sdvt_navigation/cmake_install.cmake")
   INCLUDE("/home/diya/sdvt2017/build/sdvt_viz/cmake_install.cmake")
   INCLUDE("/home/diya/sdvt2017/build/throttle_control/cmake_install.cmake")
+  INCLUDE("/home/diya/sdvt2017/build/steer_drive_ros/steer_bot_hardware_gazebo/cmake_install.cmake")
+  INCLUDE("/home/diya/sdvt2017/build/steer_drive_ros/stepback_and_steerturn_recovery/cmake_install.cmake")
+  INCLUDE("/home/diya/sdvt2017/build/steer_drive_ros/steer_drive_controller/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

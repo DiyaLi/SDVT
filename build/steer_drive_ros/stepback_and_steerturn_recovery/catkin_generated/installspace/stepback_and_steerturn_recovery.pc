@@ -1,0 +1,8 @@
+prefix=/home/diya/sdvt2017/install
+
+Name: stepback_and_steerturn_recovery
+Description: Description of stepback_and_steerturn_recovery
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/diya/sdvt2017/install/lib 
+Requires: roscpp pluginlib

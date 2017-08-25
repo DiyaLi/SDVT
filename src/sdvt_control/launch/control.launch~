@@ -8,6 +8,10 @@
     <rosparam command="load" file="$(find sdvt_control)/config/robot_localization.yaml" />
   </node>
 
+<node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
+    <remap from="twist_marker_server/cmd_vel" to="/cmd_vel" />
+  </node>
+
   <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
         args="cmd_vel sdvt_velocity_controller/cmd_vel" />
 </launch>

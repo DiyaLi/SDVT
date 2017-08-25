@@ -2,7 +2,7 @@
 <robot>
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/sdvt</robotNamespace>
     </plugin>
   </gazebo>
 
@@ -37,11 +37,18 @@
     </plugin>
   </gazebo>
 
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <robotSimType>steer_bot_hardware_gazebo/SteerBotHardwareGazebo</robotSimType>
+    </plugin>
+  </gazebo>
+
   <gazebo reference="base_link">
     <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-    <gazebo reference="imu_link">
+  <gazebo reference="imu_link">
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
   <gazebo reference="navsat_link">
@@ -108,7 +115,7 @@
         </range>
         <noise>
           <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
+           Noise parameters based on published spec for Hokuyo laser
                achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. 
@@ -123,7 +130,7 @@
     </sensor>
   </gazebo>
 
- <!-- camera 
+ camera 
   <gazebo reference="camera_l">
     <sensor type="camera" name="camera1">
       <update_rate>5.0</update_rate>
@@ -140,7 +147,7 @@
         </clip>
         <noise>
           <type>gaussian</type>
-          <!-- Noise is sampled independently per pixel on each frame.
+          Noise is sampled independently per pixel on each frame.
                That pixel's noise value is added to each of its color
                channels, which at that point lie in the range [0,1]. 
           <mean>0.0</mean>
@@ -180,7 +187,7 @@
         </clip>
         <noise>
           <type>gaussian</type>
-          <!-- Noise is sampled independently per pixel on each frame.
+         Noise is sampled independently per pixel on each frame.
                That pixel's noise value is added to each of its color
                channels, which at that point lie in the range [0,1]. 
           <mean>0.0</mean>
